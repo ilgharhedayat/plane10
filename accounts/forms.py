@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.validators import ValidationError
 
-from .models import User
+from .models import User, UserDocument
 
 
 class CreationForm(forms.ModelForm):
@@ -113,13 +113,13 @@ class RegisterForm(forms.ModelForm):
             ),
         }
 
-    def clean(self):
-        clean_data = super(RegisterForm, self).clean()
-        password = clean_data.get("password")
-        password_confirm = clean_data.get("password_confirm")
-        if (password and password_confirm) and (password != password_confirm):
-            raise ValidationError("un match password")
-        return password
+    # def clean(self):
+    #     clean_data = super(RegisterForm, self).clean()
+    #     password = clean_data["password"]
+    #     password_confirm = clean_data["password_confirm"]
+    #     if (password and password_confirm) and (password != password_confirm):
+    #         raise ValidationError("un match password")
+    #     return password
 
 
 class LoginForm(forms.ModelForm):
@@ -137,8 +137,35 @@ class LoginForm(forms.ModelForm):
 
 
 class VerifyCodeForm(forms.Form):
-    code = forms.CharField(
-        widget=forms.TextInput(
+    code = forms.IntegerField(
+        widget=forms.NumberInput(
             attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
         )
     )
+
+
+class UserDocumentForm(forms.ModelForm):
+    class Meta:
+        model = UserDocument
+        fields = (
+            'national_card',
+            'identity_card',
+            'passport',
+            'other',
+        )
+        widgets = {
+            "national_card": forms.FileInput(
+                attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
+            ),
+            "identity_card": forms.FileInput(
+                attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
+            ),
+
+            "passport": forms.FileInput(
+                attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
+            ),
+
+            "other": forms.FileInput(
+                attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
+            ),
+        }

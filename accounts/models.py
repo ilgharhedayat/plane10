@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.validators import RegexValidator
 from django.db import models
-
+from django_extensions.db.models import TimeStampedModel
 from .managers import MyUserManager
 
 
@@ -39,3 +39,15 @@ class OtpCode(models.Model):
 
     def __str__(self):
         return f"{self.phone_number} - {self.code} - {self.created}"
+
+
+class UserDocument(TimeStampedModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='document')
+    national_card = models.ImageField(upload_to='')
+    identity_card = models.ImageField(upload_to='')
+    passport = models.ImageField(upload_to='', blank=True)
+    other = models.ImageField(upload_to='', blank=True)
+
+
+
+

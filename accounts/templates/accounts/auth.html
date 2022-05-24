@@ -10,6 +10,8 @@
 {% endblock style %}
 
 {% block content %}
+    <form method="post" action="{% url 'accounts:register' %}">
+    {% csrf_token %}
     <div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -78,12 +80,13 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" style="background-color: #852193; color: white;">دریاقت کد
+                    <button type="submit" class="btn" style="background-color: #852193; color: white;">دریاقت کد
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    </form>
     <main>
         <h4 class="my-5">بخش ورود و عضویت</h4>
         <section class="sign-in py-5">

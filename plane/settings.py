@@ -25,8 +25,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # local
     "accounts.apps.AccountsConfig",
-    # thiird
+    "airlines.apps.AirlinesConfig",
+    # third
     "widget_tweaks",
+    "django_extensions",
+    "braces",
 ]
 
 MIDDLEWARE = [
