@@ -1,6 +1,6 @@
 import random
 
-from braces.views import UserPassesTestMixin,AnonymousRequiredMixin
+from braces.views import AnonymousRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,24 +9,23 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, UpdateView, View, CreateView
+from django.views.generic import CreateView, FormView, UpdateView, View
 
+from .forms import LoginForm, RegisterForm, UserDocumentForm, VerifyCodeForm, PassChangeForm, UserUpdateForm
 from .models import OtpCode, UserDocument
-from .forms import LoginForm, RegisterForm, VerifyCodeForm, UserDocumentForm
 from .uitils import send_otp
 
 # Create your views here.
 user = get_user_model()
 
 
-class UserLoginView(AnonymousRequiredMixin,FormView):
+class UserLoginView(AnonymousRequiredMixin, FormView):
     form_class = LoginForm
     success_url = reverse_lazy("accounts:verify")
     template_name = "accounts/auth.html"
 
     def form_valid(self, form):
         cd = form.changed_data
-        print(cd)
         user = authenticate(
             self.request, user_name=cd["user_name"], password=cd["password"]
         )
@@ -55,7 +54,7 @@ class UserLogoutView(LoginRequiredMixin, View):
         return redirect("accounts:login")
 
 
-class UserRegisterView(AnonymousRequiredMixin,View):
+class UserRegisterView(AnonymousRequiredMixin, View):
     form_class = RegisterForm
 
     def post(self, request):
@@ -80,7 +79,7 @@ class UserRegisterView(AnonymousRequiredMixin,View):
             return redirect("accounts:verify")
 
 
-class UserRegisterVerifyCodeView(AnonymousRequiredMixin,View):
+class UserRegisterVerifyCodeView(AnonymousRequiredMixin, View):
     form_class = VerifyCodeForm
 
     # def dispatch(self, request, *args, **kwargs):
@@ -130,16 +129,18 @@ class UserUpdateView(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = user
     success_url = reverse_lazy("accounts:dashboard")
     template_name = "accounts/update.html"
+    form_class = UserUpdateForm
 
 
 class UserPassChangeView(SuccessMessageMixin, PasswordChangeView):
     template_name = "accounts/password_change.html"
     success_url = reverse_lazy("accounts:dashboard")
     success_message = "رمز عبور با موفقیت تغییر یاقت"
+    form_class = PassChangeForm
 
 
 class UserDocCreatView(LoginRequiredMixin, CreateView):
     model = UserDocument
     form_class = UserDocumentForm
-    template_name = 'accounts/doc.html'
-    success_url = reverse_lazy('accounts:dashboard')
+    template_name = "accounts/doc.html"
+    success_url = reverse_lazy("accounts:dashboard")

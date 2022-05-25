@@ -1,28 +1,99 @@
+import datetime
+import logging
+
+import requests
+from azbankgateways import bankfactories
+from azbankgateways import default_settings as settings
+from azbankgateways import models as bank_models
+from azbankgateways.exceptions import AZBankGatewaysException
 from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.views.generic import View
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+
+# from django.views.generic import View
+#
+# from .forms import PassengerForm
+#
+#
+# # Create your views here.
+#
+#
+# class ReserveCreateView(View):
+#     form_class = PassengerForm
+#     template_name = "passengers/reserve.html"
+#
+#     def get(self, request):
+#         return render(request, self.template_name, {"form": self.form_class})
+#
+#     def post(self, request):
+#         form = self.form_class(request.POST)
+#         if form.is_valid():
+#             cd = form.save(commit=False)
+#             cd.reserver = request.user
+#             cd.fly_code = request.POST.get("fly_code")
+#             cd.save()
+#             messages.success(request, "", "success")
+#             return redirect()
+#         else:
+#             messages.error(request, "", "danger")
+#         return render(request, self.template_name, {"form": form})
+from django.views import View
+
+from airlines.models import Airline
+from passangers.models import Passenger
 
 from .forms import PassengerForm
+from .models import Passenger, Reservation
 
-# Create your views here.
+
+def home(request):
+    return render(request, "index.html")
 
 
-class ReserveCreateView(View):
-    form_class = PassengerForm
-    template_name = "passengers/reserve.html"
+class PassengerView(View):
+    template_name = "passengers/passengers.html"
+    form_class = ""
 
     def get(self, request):
-        return render(request, self.template_name, {"form": self.form_class})
+        info = {
+            "airline_name": request.POST.get("airline_name"),
+            "DepartureTime": request.POST.get("DepartureTime"),
+            "ArrivalTime": request.POST.get("ArrivalTime"),
+            "Destination": request.POST.get("Destination"),
+        }
+        return render(request, self.template_name, {"info": info})
 
     def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            cd = form.save(commit=False)
-            cd.reserver = request.user
-            cd.fly_code = request.POST.get("fly_code")
-            cd.save()
-            messages.success(request, "", "success")
-            return redirect()
-        else:
-            messages.error(request, "", "danger")
-        return render(request, self.template_name, {"form": form})
+        print(request.POST)
+
+        return render(request, self.template_name)
+
+
+class TripInfoView(View):
+    def get(self, request):
+        reserve_obj = Reservation.objects.filter(
+            user=request.user, created=datetime.date.today()
+        )
+        return render(request, "passengers/infoSubmit.html", {"reserve": reserve_obj})
+
+
+def go_to_gateway_view(request):
+    amount = 1000
+    user_mobile_number = "+989112221234"
+
+    factory = bankfactories.BankFactory()
+    try:
+        bank = factory.auto_create()
+        bank.set_request(request)
+        bank.set_amount(amount)
+        bank.set_client_callback_url(reverse("callback-gateway"))
+        bank.set_mobile_number(user_mobile_number)  # اختیاری
+
+        bank_record = bank.ready()
+
+        return bank.redirect_gateway()
+    except AZBankGatewaysException as e:
+        logging.critical(e)
+        # TODO: redirect to failed page.
+        raise e

@@ -1,8 +1,22 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.validators import ValidationError
-
+from django.contrib.auth.forms import PasswordChangeForm
 from .models import User, UserDocument
+
+
+class PassChangeForm(PasswordChangeForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PassChangeForm, self).__init__(*args, **kwargs)
+        self.fields["old_password"].label = "رمز عبور فعلی"
+        self.fields["new_password1"].label = "رمز عبور جدید "
+        self.fields["new_password2"].label = "تکرار رمز عبور جدید"
+
+        for fieldname in ['new_password1', 'new_password2', 'old_password']:
+            self.fields[fieldname].help_text = None
+            # self.fields[fieldname].widget(forms.PasswordInput(attrs={'class': 'form-control'}))
+            self.fields[fieldname].widget.attrs['class'] = 'form-control'
 
 
 class CreationForm(forms.ModelForm):
@@ -148,10 +162,10 @@ class UserDocumentForm(forms.ModelForm):
     class Meta:
         model = UserDocument
         fields = (
-            'national_card',
-            'identity_card',
-            'passport',
-            'other',
+            "national_card",
+            "identity_card",
+            "passport",
+            "other",
         )
         widgets = {
             "national_card": forms.FileInput(
@@ -160,12 +174,18 @@ class UserDocumentForm(forms.ModelForm):
             "identity_card": forms.FileInput(
                 attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
             ),
-
             "passport": forms.FileInput(
                 attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
             ),
-
             "other": forms.FileInput(
                 attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
             ),
         }
+
+
+class UserUpdateForm(RegisterForm):
+
+    def __init__(self, *args, **kwargs):
+        super(UserUpdateForm, self).__init__(*args, **kwargs)
+        self.fields.pop("password")
+        self.fields.pop("password_confirm")

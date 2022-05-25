@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import ChangeForm, CreationForm
-from .models import OtpCode, User
+from .models import OtpCode, User, UserDocument
 
 
 class UserAdmin(BaseUserAdmin):
@@ -56,3 +56,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(OtpCode)
+admin.site.register(UserDocument)
