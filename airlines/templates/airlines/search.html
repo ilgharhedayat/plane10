@@ -239,7 +239,7 @@
                                 </div>
                                 <div class="d-flex my-3 justify-content-start align-items-center">
                                     <div class="d-flex mx-3">
-                                        <h5 name="origin" class="me-2">{{ trip.Origin }}</h5>
+                                        <h5 name="origin" class="me-2">{{ trip.origin_city_name }}</h5>
                                         <h4 class="fw-bold">{{ trip.DepartureTime }}</h4>
                                     </div>
                                     <div class="d-flex time-design align-items-center">
@@ -249,7 +249,7 @@
                                         <div style="color: #BEC6CC;"> --></div>
                                     </div>
                                     <div class="d-flex mx-3">
-                                        <h5 name="Destination" class="me-2">{{ trip.Destination }}</h5>
+                                        <h5 name="Destination" class="me-2">{{ trip.destination_city_name }}</h5>
                                         <h4 name="ArrivalTime" class="fw-bold">{{ trip.ArrivalTime }}</h4>
                                     </div>
                                 </div>
@@ -275,6 +275,8 @@
                             <input type="hidden" name="Origin" value="{{ trip.Origin }}">
                             <input type="hidden" name="airline_name" value="{{ trip.airline_name }}">
                             <input type="hidden" name="persian_date" value="{{ trip.persian_date }}">
+                            <input type="hidden" name="destination_city_name" value="{{ trip.destination_city_name }}">
+                            <input type="hidden" name="origin_city_name" value="{{ trip.origin_city_name }}">
                             <button type="submit" id="formSubmit_{{ forloop.counter }}"></button>
                         </form>
                         <button type="button" onclick="parsaSubmit({{ forloop.counter }})" style="border-radius: 7px;"

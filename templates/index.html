@@ -22,68 +22,69 @@
                     <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
                 </svg>
             </h4>
-                <div class="fly-form">
-                    <div style="border-left: 2px dotted #C1C1C1;"
-                         class="d-flex side-tab flex-column justify-content-between align-items-center h-100">
-                        <a class="text-body" href=""><span style="background-color: #b6b6b6;"
-                                                           class="fly-icon py-1  px-4 d-flex flex-column-reverse justify-content-center align-items-center">پرواز <img
-                                src="{% static 'icons/fly.svg' %}" class="mb-2" alt=""></span></a>
-                        <a class="text-body" href=""><span
-                                class="fly-icon px-4 d-flex flex-column-reverse py-1 justify-content-center align-items-center">هتل <img
-                                src="{% static 'icons/hotel.png' %}" class="mb-2" alt=""></span></a>
-                        <a class="text-body" href=""><span
-                                class="fly-icon px-4 d-flex flex-column-reverse py-1 justify-content-center align-items-center">تور <img
-                                src="{% static 'icons/tour.png' %}" class="mb-2" alt=""></span></a>
-                    </div>
-                                    <form method="get" action="{% url "airlines:fly_search" %}">
+            <div class="fly-form">
+                <div style="border-left: 2px dotted #C1C1C1;"
+                     class="d-flex side-tab flex-column justify-content-between align-items-center h-100">
+                    <a class="text-body" href=""><span style="background-color: #b6b6b6;"
+                                                       class="fly-icon py-1  px-4 d-flex flex-column-reverse justify-content-center align-items-center">پرواز <img
+                            src="{% static 'icons/fly.svg' %}" class="mb-2" alt=""></span></a>
+                    <a class="text-body" href=""><span
+                            class="fly-icon px-4 d-flex flex-column-reverse py-1 justify-content-center align-items-center">هتل <img
+                            src="{% static 'icons/hotel.png' %}" class="mb-2" alt=""></span></a>
+                    <a class="text-body" href=""><span
+                            class="fly-icon px-4 d-flex flex-column-reverse py-1 justify-content-center align-items-center">تور <img
+                            src="{% static 'icons/tour.png' %}" class="mb-2" alt=""></span></a>
+                </div>
+                <form method="get" action="{% url "airlines:fly_search" %}">
 
-                        <div class="my-4 d-flex justify-content-start">
-                            <div class="form-check rounded-3 mx-2 p-1">
-                                <label style="color:#A281B0;" class="form-check-label me-1" for="flexRadioDefault1">
-                                    پرواز یک طرفه
-                                </label>
-                                <input class="form-check-input mx-2" type="radio" name="flexRadioDefault"
-                                       id="flexRadioDefault1">
-                            </div>
-                            <div class="form-check rounded-3 mx-2 p-1">
-                                <label style="color:#A281B0;" class="form-check-label me-1" for="flexRadioDefault2">
-                                    پرواز رفت و برگشت
-                                </label>
-                                <input class="form-check-input mx-2" type="radio" name="flexRadioDefault"
-                                       id="flexRadioDefault2">
-                            </div>
+                    <div class="my-4 d-flex justify-content-start">
+                        <div class="form-check rounded-3 mx-2 p-1">
+                            <label style="color:#A281B0;" class="form-check-label me-1" for="flexRadioDefault1">
+                                پرواز یک طرفه
+                            </label>
+                            <input class="form-check-input mx-2" type="radio" name="flexRadioDefault"
+                                   id="flexRadioDefault1">
                         </div>
-                        <div class="d-flex justify-content-center align-items-center inputs-div" style="height: 48px;">
-                            <div class="input-group rounded-3 mx-1">
+                        <div class="form-check rounded-3 mx-2 p-1">
+                            <label style="color:#A281B0;" class="form-check-label me-1" for="flexRadioDefault2">
+                                پرواز رفت و برگشت
+                            </label>
+                            <input class="form-check-input mx-2" type="radio" name="flexRadioDefault"
+                                   id="flexRadioDefault2">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center inputs-div" style="height: 48px;">
+                        <div class="input-group rounded-3 mx-1">
                             <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                                 height="16" fill="currentColor" style="color: #A27EAE;"
                                                                 class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path
                                     d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></span>
-                                <input type="text" name="source" class="form-control" placeholder="شهر مبدا"
-                                       id="travelSrc">
-                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                    height="16" fill="currentColor"
-                                                                    style="color: #A27EAE;"
-                                                                    class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path
-                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></span>
-                                <input type="text" name="target" class="form-control" placeholder="شهر مقصد"
-                                       id="travelGoal">
-                            </div>
-                            <div class="input-group input-group-date rounded-3 mx-1">
+                            <input type="text" name="source" class="form-control" placeholder="شهر مبدا"
+                                   id="travelSrc">
+                            <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" fill="currentColor"
+                                                                style="color: #A27EAE;"
+                                                                class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path
+                                    d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></span>
+                            <input type="text" name="target" class="form-control" placeholder="شهر مقصد"
+                                   id="travelGoal">
+                        </div>
+                        <div class="input-group input-group-date rounded-3 mx-1">
                             <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                                 height="16" fill="currentColor"
                                                                 class="bi bi-calendar2-week-fill"
                                                                 style="color: #A27EAE;" viewBox="0 0 16 16"><path
                                     d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zM8.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM3 10.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/></svg></span>
-                                <input type="text" name="date" class="form-control" placeholder="تاریخ رفت" id="goDate">
-                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                    height="16" fill="currentColor"
-                                                                    class="bi bi-calendar2-week-fill"
-                                                                    style="color: #A27EAE;" viewBox="0 0 16 16"><path
-                                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zM8.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM3 10.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/></svg></span>
-                                <input type="text" name="date2" class="form-control" placeholder="تاریخ برگشت" id="returnDate">
-                            </div>
-                            <div class="input-group rounded-3 mx-1">
+                            <input type="text" name="date" class="form-control" placeholder="تاریخ رفت" id="goDate">
+                            <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" fill="currentColor"
+                                                                class="bi bi-calendar2-week-fill"
+                                                                style="color: #A27EAE;" viewBox="0 0 16 16"><path
+                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zM8.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM3 10.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/></svg></span>
+                            <input type="text" name="date2" class="form-control" placeholder="تاریخ برگشت"
+                                   id="returnDate">
+                        </div>
+                        <div class="input-group rounded-3 mx-1">
                             <span class="input-group-text" title="12 سال به بالا"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     style="color: #A27EAE;" class="bi bi-people-fill" viewBox="0 0 16 16"><path
@@ -91,42 +92,43 @@
                                     fill-rule="evenodd"
                                     d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/><path
                                     d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></span>
-                                <input type="text" name="adult" class="form-control" title="12 سال به بالا"
-                                       placeholder="بزرگسال"
-                                       id="adultsNum">
-                                <span class="input-group-text" title="2 تا 12 سال"><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16" height="16"
-                                        fill="currentColor"
-                                        style="color: #A27EAE;"
-                                        class="bi bi-people-fill"
-                                        viewBox="0 0 16 16"><path
-                                        d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path
-                                        fill-rule="evenodd"
-                                        d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/><path
-                                        d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></span>
-                                <input type="text" name="child" class="form-control" title="2 تا 12 سال"
-                                       placeholder="کودک"
-                                       id="adultsNum">
-                                <span class="input-group-text" name="infant" title="زیر 2 سال"><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16" height="16"
-                                        fill="currentColor"
-                                        style="color: #A27EAE;"
-                                        class="bi bi-people-fill"
-                                        viewBox="0 0 16 16"><path
-                                        d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path
-                                        fill-rule="evenodd"
-                                        d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/><path
-                                        d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></span>
-                                <input type="text" class="form-control" title="زیر 2 سال" placeholder="نوزاد"
-                                       id="adultsNum">
-                            </div>
-                            <button type="submit"
-                                    class="btn btnSearch d-flex align-items-center justify-content-center">جستجو</button>
+                            <input type="text" name="adult" class="form-control" title="12 سال به بالا"
+                                   placeholder="بزرگسال"
+                                   id="adultsNum">
+                            <span class="input-group-text" title="2 تا 12 سال"><svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16"
+                                    fill="currentColor"
+                                    style="color: #A27EAE;"
+                                    class="bi bi-people-fill"
+                                    viewBox="0 0 16 16"><path
+                                    d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path
+                                    fill-rule="evenodd"
+                                    d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/><path
+                                    d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></span>
+                            <input type="text" name="child" class="form-control" title="2 تا 12 سال"
+                                   placeholder="کودک"
+                                   id="adultsNum">
+                            <span class="input-group-text" name="infant" title="زیر 2 سال"><svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16"
+                                    fill="currentColor"
+                                    style="color: #A27EAE;"
+                                    class="bi bi-people-fill"
+                                    viewBox="0 0 16 16"><path
+                                    d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path
+                                    fill-rule="evenodd"
+                                    d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/><path
+                                    d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></span>
+                            <input type="text" class="form-control" title="زیر 2 سال" placeholder="نوزاد"
+                                   id="adultsNum">
                         </div>
-                    </form>
-                </div>
+                        <button type="submit"
+                                class="btn btnSearch d-flex align-items-center justify-content-center">جستجو
+                        </button>
+                    </div>
+                </form>
+            </div>
         </section>
 
         <section class="video-section my-3">

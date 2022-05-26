@@ -53,6 +53,45 @@ $(document).ready(function(){
 	$('#nav-icon').click(function(){
 		$(this).toggleClass('open');
 	});
+    /* new codes */
+    $(".side-tab .text-body").click(function(event){
+        event.preventDefault();
+        let dataTab = $(this).data("tab");
+        $(".text-body span").css("background-color","transparent")
+        $(this).children('span').css("background-color","#b6b6b6");
+        $(".select-area").addClass("d-none");
+        $("."+dataTab).removeClass("d-none");
+    })
+    $("#returnDateHotel").persianDatepicker({
+        altField: '#returnDateHotel',
+        altFormat: "YYYY/MM/DD",
+        observer: false,
+        format: 'YYYY/MM/DD',
+        initialValue: false,
+        initialValueType: 'persian',
+        autoClose: true,
+        });
+    $("#goDateHotel").persianDatepicker({
+        altField: '#goDateHotel',
+        altFormat: "YYYY/MM/DD",
+        observer: false,
+        format: 'YYYY/MM/DD',
+        initialValue: false,
+        initialValueType: 'persian',
+        autoClose: true,
+    });
+    $("#hotelSrc").focus(function(){
+        fetch('http://localhost/php/plane/cities.json')
+        .then(res => res.json())
+        .then(data => getDataFromJson(data))
+        function getDataFromJson(data){
+            let dataCitie = data;
+            let selectElemnt = document.getElementById("hotelSrc")
+            dataCitie.forEach(function(value){
+                selectElemnt.innerHTML +="<option value='"+value['id']+"'>"+value['title']+"</option>";
+            })
+        }
+    })
 });
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";

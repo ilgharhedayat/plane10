@@ -365,7 +365,10 @@ small{
 	background-color: white;
 	border-radius: 20px;
 }
-
+/* new style*/
+.select-area {
+  width: 100%;
+}
 
 /* @media (max-width: 575.98px) {}
 @media (min-width: 576px) and (max-width: 767.98px) {}

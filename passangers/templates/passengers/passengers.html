@@ -30,11 +30,11 @@
             <section style="border-radius: 10px; box-shadow: 0 0 10px lightgray;"
                      class="my-3 p-2 py-4 ticket d-flex bg-white justify-content-center align-items-center">
                 <div class="col-9 d-flex flex-column">
-                    <h6 class="fw-bold ms-3">{{ info.persian_date }}</h6>
+                    <h6 class="fw-bold ms-3">شنبه، 1 فروردین</h6>
                     <div class="d-flex justify-content-start align-items-center">
                         <div class="d-flex mx-5 ticket-img flex-column text-center align-items-center justify-content-center">
-                            <img src="{% static "icons/IR.png" %}" height="35" width="35" alt="">
-                            <div class="mt-2" style="font-size: 12px;">{{ info.airline_name }}</div>
+                            <img src="assets/icons/IR.png" height="35" width="35" alt="">
+                            <div class="mt-2" style="font-size: 12px;">ایران ایر</div>
                         </div>
                         <div class="d-flex flex-column justify-content-center align-items-start">
                             <div class="mb-3 mt-2">
@@ -45,7 +45,7 @@
                             <div class="d-flex my-3 justify-content-start align-items-center">
                                 <div class="d-flex mx-3">
                                     <h5 class="me-2">اهواز</h5>
-                                    <h4 class="fw-bold">{{ info.DepartureTime }}</h4>
+                                    <h4 class="fw-bold">07:00</h4>
                                 </div>
                                 <div class="d-flex time-design align-items-center">
                                     <div style="color: #BEC6CC;"> +----------------o</div>
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="d-flex mx-3">
                                     <h5 class="me-2">تهران</h5>
-                                    <h4 class="fw-bold">{{ info.ArrivalTime }}</h4>
+                                    <h4 class="fw-bold">08:55</h4>
                                 </div>
                             </div>
                         </div>
@@ -96,21 +96,25 @@
                 <h4 class="ms-2 mt-1 fw-bold">مشخصات مسافران</h4>
             </div>
             <div id="passengers">
-                <form class="passenger_wrapper" action="{% url "passengers:trip" %}" method="post">
+                <form class="passenger_wrapper" action="" method="post">
                     {% csrf_token %}
                     <div class="my-4 d-flex justify-content-start">
                         <div class="form-check rounded-3 me-2 p-1 ps-0">
                             <label class="form-check-label me-1" for="flexRadioDefault1">
                                 کارت ملی
                             </label>
-                            <input class="form-check-input me-2 ms-1" type="radio" checked name="idcard[]"
+                            <input style="height: 20px!important;width: 20px!important;"
+                                   class="form-check-input me-2 ms-1"
+                                   type="radio" checked name="idcard[]"
                                    id="flexRadioDefault1">
                         </div>
                         <div class="form-check rounded-3 me-2 p-1 ps-0">
                             <label class="form-check-label me-1" for="flexRadioDefault2">
                                 پاسپورت
                             </label>
-                            <input class="form-check-input me-2 ms-1" type="radio" name="idcard[]"
+                            <input style="height: 20px!important;width: 20px!important;"
+                                   class="form-check-input me-2 ms-1"
+                                   type="radio" name="idcard[]"
                                    id="flexRadioDefault2">
                         </div>
                     </div>
@@ -153,18 +157,30 @@
                             </select>
                         </div>
                     </div>
-                    <button class="btn ms-2 fw-bold btn-primary" type="submit">تایید و ادامه خرید</button>
-
+                    <button type="button" id="addNewPassenger" class="btn btn-outline-primary">افزودن مسافر جدید
+                    </button>
+                    <button type="submit" id="submitPassengers" class="btn btn-outline-primary float-left">ثبت مسافرین
+                    </button>
                 </form>
                 <hr>
             </div>
-            <button id="addNewPassenger" class="btn btn-outline-primary">افزودن مسافر جدید</button>
+            {#            <button type="submit" id="addNewPassenger" class="btn btn-outline-primary">افزودن مسافر جدید</button>#}
         </section>
 
         <script>
             document.getElementById('addNewPassenger').onclick = function () {
                 let content = document.getElementsByClassName('passenger_wrapper')[document.getElementsByClassName('passenger_wrapper').length - 1].cloneNode(true);
                 document.getElementById('passengers').appendChild(content);
+                console.log(document.getElementsByClassName('passenger_wrapper')[document.getElementsByClassName('passenger_wrapper').length - 1].reset())
+            }
+            document.getElementById('submitPassengers').onclick = function () {
+                let forms = document.getElementsByClassName('passenger_wrapper');
+                let formDatas = [];
+                [...forms].forEach(function (value, index) {
+                    let formData = new FormData(value);
+                    formDatas.push(formData);
+                })
+                console.log(formDatas) // upload
             }
         </script>
 
@@ -194,7 +210,7 @@
                     </h4>
                     <small class="ms-1">ریال</small>
                 </div>
-
+                <a href="" class="btn ms-2 fw-bold btn-primary">تایید و ادامه خرید</a>
             </div>
         </section>
     </main>

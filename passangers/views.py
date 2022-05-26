@@ -62,6 +62,8 @@ class PassengerView(View):
             "ArrivalTime": request.GET.get("ArrivalTime"),
             "Destination": request.GET.get("Destination"),
             "date": request.GET.get('persian_date'),
+            'origin': request.GET.get('origin_city_name0'),
+            'destination': request.GET.get('destination_city_name')
         }
         print(request.GET.get('airline_name'))
         print("*" * 99)
@@ -70,10 +72,12 @@ class PassengerView(View):
 
         return render(request, self.template_name, {"info": info})
 
-    # def post(self, request):
-    #     print(request.POST.get('airline_name'))
-    #
-    #     return render(request, self.template_name)
+    def post(self, request):
+        print('elyas')
+        print(request.POST)
+        print(request.POST.get('airline_name'))
+
+        return render(request, self.template_name)
 
 
 class TripInfoView(View):
