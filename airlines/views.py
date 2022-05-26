@@ -28,6 +28,7 @@ class SearchListView(View):
                 i["airline_name"] = airline.name
                 i["DepartureTime"] = i["DepartureDateTime"][11:]
                 i["ArrivalTime"] = i["ArrivalDateTime"][11:]
+                i['persian_date'] = i['DepartureDateTime'][:10]
                 flight_count += 1
 
             print(trip_list)
@@ -43,9 +44,3 @@ class SearchListView(View):
             self.template_name,
             {"trip_list": trip_list, "flight_count": flight_count},
         )
-
-
-{
-    'THR': 'تهران',
-    'MHD': 'مشهذ',
-}

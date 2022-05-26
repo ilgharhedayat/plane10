@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "airlines.apps.AirlinesConfig",
     "passangers.apps.PassangersConfig",
+    "hotels.apps.HotelsConfig",
     # third
     "widget_tweaks",
     "django_extensions",
@@ -167,7 +168,3 @@ AZ_IRANIAN_BANK_GATEWAYS = {
 }
 
 LANGUAGE_CODE = "en-us"
-
-
-
-

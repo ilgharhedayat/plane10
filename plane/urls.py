@@ -10,6 +10,7 @@ urlpatterns = [
     path("airlines/", include("airlines.urls", namespace="airlines")),
     path("", include("passangers.urls", namespace="passengers")),
     path("bankgateways/", az_bank_gateways_urls()),
+    path('hotels/', include('hotels.urls', namespace='hotel'))
 ]
 
 if settings.DEBUG:

@@ -22,6 +22,10 @@ class Reservation(TimeStampedModel):
     phone_number = models.CharField(max_length=125, verbose_name="شماره تماس")
     paid = models.BooleanField(default=False, verbose_name="پرداخت شده؟")
 
+
+    def __str__(self):
+        return f'{self.user}  رزروهای '
+
     def get_total_cost(self):
         return self.passengers.filter.aggregate(Sum("price"))
 

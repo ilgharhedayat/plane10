@@ -57,17 +57,23 @@ class PassengerView(View):
 
     def get(self, request):
         info = {
-            "airline_name": request.POST.get("airline_name"),
-            "DepartureTime": request.POST.get("DepartureTime"),
-            "ArrivalTime": request.POST.get("ArrivalTime"),
-            "Destination": request.POST.get("Destination"),
+            "airline_name": request.GET.get("airline_name"),
+            "DepartureTime": request.GET.get("DepartureTime"),
+            "ArrivalTime": request.GET.get("ArrivalTime"),
+            "Destination": request.GET.get("Destination"),
+            "date": request.GET.get('persian_date'),
         }
+        print(request.GET.get('airline_name'))
+        print("*" * 99)
+        print(info.get('airline_name'))
+        print(request.GET.get('persian_date'))
+
         return render(request, self.template_name, {"info": info})
 
-    def post(self, request):
-        print(request.POST)
-
-        return render(request, self.template_name)
+    # def post(self, request):
+    #     print(request.POST.get('airline_name'))
+    #
+    #     return render(request, self.template_name)
 
 
 class TripInfoView(View):
