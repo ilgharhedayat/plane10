@@ -15,7 +15,8 @@
         <section class="sign-in py-5">
             <div>
                 <div class="sign-in-section d-flex flex-column align-items-center justify-content-CENTER px-5">
-                    <form class="w-100">
+                    <form class="w-100" method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="input-group inputGP rounded-3 mx-2 my-3">
                   <span class="input-group-text inputGPText text-secondary"><svg xmlns="http://www.w3.org/2000/svg"
                                                                                  width="16" height="16"
@@ -78,7 +79,7 @@
                   </svg>
                      {{ form.other.label }}
                   </span>
-                            {{ form.other.email }}
+                            {{ form.other }}
                         </div>
 
 

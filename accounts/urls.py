@@ -20,5 +20,5 @@ urlpatterns = [
     path("profile/", UserDashboard.as_view(), name="dashboard"),
     path("pass_change/", UserPassChangeView.as_view(), name="pass_change"),
     path("update/<int:pk>/", UserUpdateView.as_view(), name="update"),
-    path("doc_create/", UserDocCreatView.as_view(), name="doc"),
+    path("doc_update/", UserDocCreatView.as_view(), name="doc"),
 ]

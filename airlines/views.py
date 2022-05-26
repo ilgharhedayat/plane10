@@ -1,7 +1,4 @@
-import ast
-import datetime
 import json
-
 import requests
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import View
@@ -12,7 +9,6 @@ from passangers.models import Passenger
 from .models import Airline
 
 
-# Create your views here.
 class SearchListView(View):
     template_name = "airlines/search.html"
 
@@ -47,3 +43,9 @@ class SearchListView(View):
             self.template_name,
             {"trip_list": trip_list, "flight_count": flight_count},
         )
+
+
+{
+    'THR': 'تهران',
+    'MHD': 'مشهذ',
+}

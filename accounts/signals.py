@@ -5,7 +5,7 @@ from .models import User, UserDocument
 
 def create_document(sender, **kwargs):
     if kwargs["created"]:
-        if kwargs["instance"].is_student:
+        if kwargs["instance"]:
             p1 = UserDocument(user=kwargs["instance"])
             p1.save()
 

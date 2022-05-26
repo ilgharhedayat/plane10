@@ -11,7 +11,14 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, FormView, UpdateView, View
 
-from .forms import LoginForm, RegisterForm, UserDocumentForm, VerifyCodeForm, PassChangeForm, UserUpdateForm
+from .forms import (
+    LoginForm,
+    PassChangeForm,
+    RegisterForm,
+    UserDocumentForm,
+    UserUpdateForm,
+    VerifyCodeForm,
+)
 from .models import OtpCode, UserDocument
 from .uitils import send_otp
 
@@ -19,32 +26,59 @@ from .uitils import send_otp
 user = get_user_model()
 
 
-class UserLoginView(AnonymousRequiredMixin, FormView):
+class UserLoginView(View):
     form_class = LoginForm
-    success_url = reverse_lazy("accounts:verify")
+    register_form = RegisterForm
     template_name = "accounts/auth.html"
 
-    def form_valid(self, form):
-        cd = form.changed_data
-        user = authenticate(
-            self.request, user_name=cd["user_name"], password=cd["password"]
+    def get(self, request):
+        form = self.form_class
+        return render(
+            request, self.template_name, {"form": form, "register_form": RegisterForm}
         )
-        if user is not None:
-            login(self.request, user)
-            messages.success(self.request, "", "success")
-        else:
-            messages.error(self.request, "", "danger")
-        return super(UserLoginView, self).form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context_data = super(UserLoginView, self).get_context_data(**kwargs)
-        context_data["register_form"] = RegisterForm
-        return context_data
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(
+                request, user_name=cd["user_name"], password=cd["password"]
+            )
+            if user is not None:
+                login(request, user)
+                messages.success(request, "با موفقیت وارد شدید", "info")
+                return redirect("accounts:dashboard")
+            messages.error(request, "نام کاربری یا رمز عبور اشتباه است", "warning")
+        return render(request, self.template_name, {"form": form})
 
-    def form_invalid(self, form):
-        print(form.errors)
-        messages.error(self.request, form.errors, "danger")
-        return super(UserLoginView, self).form_invalid(form)
+
+# class UserLoginView(AnonymousRequiredMixin, FormView):
+#     form_class = LoginForm
+#     success_url = reverse_lazy("accounts:dashboard")
+#     template_name = "accounts/auth.html"
+#
+#     def form_valid(self, form):
+#         print(form.cleaned_data)
+#         cd = form.changed_data
+#         user = authenticate(
+#             self.request, user_name=cd["user_name"], password=cd["password"]
+#         )
+#         if user is not None:
+#             login(self.request, user)
+#             messages.success(self.request, "", "success")
+#         else:
+#             messages.error(self.request, "", "danger")
+#         return super(UserLoginView, self).form_valid(form)
+#
+#     def get_context_data(self, **kwargs):
+#         context_data = super(UserLoginView, self).get_context_data(**kwargs)
+#         context_data["register_form"] = RegisterForm
+#         return context_data
+#
+#     def form_invalid(self, form):
+#         print(form.errors)
+#         messages.error(self.request, form.errors, "danger")
+#         return super(UserLoginView, self).form_invalid(form)
 
 
 class UserLogoutView(LoginRequiredMixin, View):
@@ -81,6 +115,7 @@ class UserRegisterView(AnonymousRequiredMixin, View):
 
 class UserRegisterVerifyCodeView(AnonymousRequiredMixin, View):
     form_class = VerifyCodeForm
+    template_name = "accounts/verify.html"
 
     # def dispatch(self, request, *args, **kwargs):
     #     if request.META.get("HTTP_REFERER") == "":
@@ -91,29 +126,35 @@ class UserRegisterVerifyCodeView(AnonymousRequiredMixin, View):
 
     def get(self, request):
         form = self.form_class
-        return render(request, "accounts/verify.html", {"form": form})
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request):
         user_session = request.session["user_registration_info"]
         code_instance = OtpCode.objects.get(phone_number=user_session["phone_number"])
         form = self.form_class(request.POST)
+        print(form.errors)
+        print(form.cleaned_data)
         if form.is_valid():
+            print(form.errors)
             cd = form.cleaned_data
+            print(cd)
+            print(code_instance.code)
             if cd["code"] == code_instance.code:
                 user.objects.create_user(
-                    user_session["phone_number"],
-                    user_session["email"],
-                    user_session["full_name"],
-                    user_session["password"],
+                    first_name=user_session["first_name"],
+                    last_name=user_session["last_name"],
+                    user_name=user_session["user_name"],
+                    email=user_session["email"],
+                    phone_number=user_session["phone_number"],
+                    password=user_session["password"],
                 )
-
                 code_instance.delete()
                 messages.success(request, "you registered.", "success")
-                return redirect("home:home")
+                return redirect("accounts:dashboard")
             else:
                 messages.error(request, "this code is wrong", "danger")
-                return redirect("accounts:verify_code")
-        return redirect("accounts:dashboard")
+                return redirect("accounts:verify")
+        return redirect("accounts:verify")
 
 
 class UserDashboard(LoginRequiredMixin, View):
@@ -138,9 +179,22 @@ class UserPassChangeView(SuccessMessageMixin, PasswordChangeView):
     success_message = "رمز عبور با موفقیت تغییر یاقت"
     form_class = PassChangeForm
 
+    def form_invalid(self, form):
+        print(form.errors)
+        return super(UserPassChangeView, self).form_invalid(form)
 
-class UserDocCreatView(LoginRequiredMixin, CreateView):
-    model = UserDocument
+
+class UserDocCreatView(LoginRequiredMixin, View):
     form_class = UserDocumentForm
     template_name = "accounts/doc.html"
-    success_url = reverse_lazy("accounts:dashboard")
+
+    def get(self, request):
+        form = self.form_class(instance=request.user.document)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST, request.FILES, instance=request.user.document)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'مدارک با موفقیت بارگذاری شد', 'success')
+        return redirect('accounts:dashboard')

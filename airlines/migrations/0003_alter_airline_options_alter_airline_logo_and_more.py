@@ -6,37 +6,39 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airlines', '0002_airline_password_airline_username'),
+        ("airlines", "0002_airline_password_airline_username"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='airline',
-            options={'verbose_name': 'ایرلاین', 'verbose_name_plural': 'ایرلاین ها'},
+            name="airline",
+            options={"verbose_name": "ایرلاین", "verbose_name_plural": "ایرلاین ها"},
         ),
         migrations.AlterField(
-            model_name='airline',
-            name='logo',
-            field=models.ImageField(upload_to='', verbose_name='لوگو'),
+            model_name="airline",
+            name="logo",
+            field=models.ImageField(upload_to="", verbose_name="لوگو"),
         ),
         migrations.AlterField(
-            model_name='airline',
-            name='name',
-            field=models.CharField(max_length=250, verbose_name='نام شرکت هواپیمایی '),
+            model_name="airline",
+            name="name",
+            field=models.CharField(max_length=250, verbose_name="نام شرکت هواپیمایی "),
         ),
         migrations.AlterField(
-            model_name='airline',
-            name='password',
-            field=models.CharField(blank=True, max_length=125, verbose_name='رمز عبور'),
+            model_name="airline",
+            name="password",
+            field=models.CharField(blank=True, max_length=125, verbose_name="رمز عبور"),
         ),
         migrations.AlterField(
-            model_name='airline',
-            name='symbol',
-            field=models.CharField(max_length=10, verbose_name='نماد'),
+            model_name="airline",
+            name="symbol",
+            field=models.CharField(max_length=10, verbose_name="نماد"),
         ),
         migrations.AlterField(
-            model_name='airline',
-            name='username',
-            field=models.CharField(blank=True, max_length=125, verbose_name='نام کاربری'),
+            model_name="airline",
+            name="username",
+            field=models.CharField(
+                blank=True, max_length=125, verbose_name="نام کاربری"
+            ),
         ),
     ]

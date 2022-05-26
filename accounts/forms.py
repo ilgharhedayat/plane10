@@ -1,22 +1,21 @@
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import PasswordChangeForm, ReadOnlyPasswordHashField
 from django.core.validators import ValidationError
-from django.contrib.auth.forms import PasswordChangeForm
+
 from .models import User, UserDocument
 
 
 class PassChangeForm(PasswordChangeForm):
-
     def __init__(self, *args, **kwargs):
         super(PassChangeForm, self).__init__(*args, **kwargs)
         self.fields["old_password"].label = "رمز عبور فعلی"
         self.fields["new_password1"].label = "رمز عبور جدید "
         self.fields["new_password2"].label = "تکرار رمز عبور جدید"
 
-        for fieldname in ['new_password1', 'new_password2', 'old_password']:
+        for fieldname in ["new_password1", "new_password2", "old_password"]:
             self.fields[fieldname].help_text = None
             # self.fields[fieldname].widget(forms.PasswordInput(attrs={'class': 'form-control'}))
-            self.fields[fieldname].widget.attrs['class'] = 'form-control'
+            self.fields[fieldname].widget.attrs["class"] = "form-control"
 
 
 class CreationForm(forms.ModelForm):
@@ -136,18 +135,30 @@ class RegisterForm(forms.ModelForm):
     #     return password
 
 
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ("user_name", "password")
-        widgets = {
-            "user_name": forms.TextInput(
-                attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
-            ),
-            "password": forms.PasswordInput(
-                attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
-            ),
-        }
+class LoginForm(forms.Form):
+    user_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
+        )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
+        )
+    )
+
+
+# class Meta:
+#     model = User
+#     fields = ("user_name", "password")
+#     widgets = {
+#         "user_name": forms.TextInput(
+#             attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
+#         ),
+#         "password": forms.PasswordInput(
+#             attrs={"class": "form-control", "id": "travelSrc", "placeholder": ""}
+#         ),
+#     }
 
 
 class VerifyCodeForm(forms.Form):
@@ -184,7 +195,6 @@ class UserDocumentForm(forms.ModelForm):
 
 
 class UserUpdateForm(RegisterForm):
-
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
         self.fields.pop("password")
