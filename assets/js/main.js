@@ -140,9 +140,9 @@ $(function () {
         if (id) {
             $(`#${id}`).persianDatepicker({
                 altField: `#${id}`,
-                altFormat: "MM/DD",
+                altFormat: "YYYY/MM/DD",
                 observer: false,
-                format: 'MM/DD',
+                format: 'YYYY/MM/DD',
                 initialValue: false,
                 initialValueType: 'persian',
                 autoClose: true,
@@ -153,9 +153,9 @@ $(function () {
 const setDate = () => {
     $(".birthdate").persianDatepicker({
         altField: '.birthdate',
-        altFormat: "MM/DD",
+        altFormat: "YYYY/",
         observer: false,
-        format: 'MM/DD',
+        format: 'YYYY/MM/DD',
         initialValue: false,
         initialValueType: 'persian',
         autoClose: true,
