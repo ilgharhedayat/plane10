@@ -15,7 +15,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name="ایمیل")
     phone_number = models.CharField(
         max_length=11,
-        validators=[RegexValidator(r"^09[0|1|2|9][0-9]{8}$")],
         verbose_name="شماره تلفن",
     )
 

@@ -415,3 +415,23 @@ main{
 @media (min-width: 1300px) and (max-width: 1599.98px) {}
 @media (min-width: 1600px) and (max-width: 1999.98px) {}
 @media (min-width: 2000px){}
+/* ===========header image============ */
+.header-image-container {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.parallax-img {
+    background-image: url("../images/airplane.jfif");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 600px;
+}
+
+.plane-bottom {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}

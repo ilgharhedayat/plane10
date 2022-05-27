@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Sum
 from django_extensions.db.models import TimeStampedModel
+from airlines.models import Airline
 
 user = settings.AUTH_USER_MODEL
 
@@ -9,11 +10,15 @@ user = settings.AUTH_USER_MODEL
 # Create your models here.
 
 
-class Reservation(TimeStampedModel):
+class Reservation(models.Model):
     user = models.ForeignKey(
         user, on_delete=models.CASCADE, related_name="reservation", verbose_name="کاربر"
     )
+    air_line = models.ForeignKey(Airline, on_delete=models.CASCADE, related_name='air_line_reservation', blank=True,
+                                 null=True)
     fly_code = models.CharField(max_length=125, verbose_name="کد پرواز")
+    flight_class = models.CharField(max_length=125, blank=True)
+    flight_no = models.CharField(max_length=125, blank=True)
     source = models.CharField(max_length=125, verbose_name="مبذا")
     target = models.CharField(max_length=125, verbose_name="مقصد")
     # price = models.IntegerField(verbose_name='')
@@ -21,20 +26,20 @@ class Reservation(TimeStampedModel):
     email = models.EmailField()
     phone_number = models.CharField(max_length=125, verbose_name="شماره تماس")
     paid = models.BooleanField(default=False, verbose_name="پرداخت شده؟")
-
+    pnr_code = models.CharField(max_length=125, blank=True, verbose_name='شناسه رزرو')
 
     def __str__(self):
         return f'{self.user}  رزروهای '
 
     def get_total_cost(self):
-        return self.passengers.filter.aggregate(Sum("price"))
+        return self.passengers.aggregate(Sum("price"))['price__sum']
 
     class Meta:
         verbose_name = "رزرو"
         verbose_name_plural = "رزروها"
 
 
-class Passenger(TimeStampedModel):
+class Passenger(models.Model):
     GENDER = (
         ("مرد", "مرد"),
         ("زن", "زن"),

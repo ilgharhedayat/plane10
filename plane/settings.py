@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "airlines.apps.AirlinesConfig",
     "passangers.apps.PassangersConfig",
     "hotels.apps.HotelsConfig",
+    "core.apps.CoreConfig",
     # third
     "widget_tweaks",
     "django_extensions",
@@ -59,6 +60,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+
+                # local
+                'core.context_processors.access_setting',
             ],
         },
     },
@@ -167,4 +171,4 @@ AZ_IRANIAN_BANK_GATEWAYS = {
     ],  # اختیاری
 }
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fa-ir"

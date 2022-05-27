@@ -20,7 +20,7 @@
                       d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
             </svg>
             <p class="my-0 mx-3" dir="ltr">
-                (021) 42168 | تهران خیابان ایران پلاک 57
+                {{ setting.phone_number }}| {{ setting.address }}
             </p>
         </div>
     </div>
@@ -64,10 +64,12 @@
             </div>
             <div class="collapse navbar-collapse collapseNav" id="mainNav">
                 <div class="navFields">
-                    <a class="navbar-brand px-2" href="index.html">لوگو</a>
+                    <a class="navbar-brand px-2" href="{% url "passengers:home" %}">
+                        <img src="{{ setting.logo.url }}">
+                    </a>
                     <ul class="navbar-nav">
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="index.html" role="button">
+                            <a class="nav-link" href="{% url 'passengers:home' %}" role="button">
                                 صفحه اصلی
                             </a>
                         </li>
@@ -98,15 +100,29 @@
                         </li>
                     </ul>
                 </div>
+
                 <div class="nav-item desktop-signin rounded-3 d-flex align-items-center">
-                    <a href="signin.html" type="button" class="btn btn-outline-danger rounded-3 btnSign"
-                       style="padding: 10px; border: 2px dotted;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-people" viewBox="0 0 16 16">
-                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-                        </svg>
-                        عضویت | ورود کاربران
-                    </a>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url "accounts:dashboard" %}" type="button"
+                           class="btn btn-outline-danger rounded-3 btnSign"
+                           style="padding: 10px; border: 2px dotted;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-people" viewBox="0 0 16 16">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                            </svg>
+                            سلام {{ request.user.first_name }}-{{ request.user.last_name }}
+                        </a>
+                    {% else %}
+                        <a href="http://localhost:8000/accounts/login" type="button"
+                           class="btn btn-outline-danger rounded-3 btnSign"
+                           style="padding: 10px; border: 2px dotted;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-people" viewBox="0 0 16 16">
+                            </svg>
+                            عضویت | ورود کاربران
+                        </a>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
@@ -129,22 +145,22 @@
     <div class="footer-content">
         <div class="social-media p-3 rounded-3 d-flex flex-column justify-content-evenly align-items-center">
             <div class="foot-logo">
-                LOGO
+                <img src="{{ setting.logo }}">
             </div>
             <div class="socialLinks flex-row">
-                <a href="#" title="twitter"><img class="twitterLink"
-                                                 src="https://img.icons8.com/windows/32/ffffff/twitter.png"/></a>
-                <a href="#" title="instagram"><img class="instaLink"
-                                                   src="https://img.icons8.com/windows/32/ffffff/instagram-new.png"/></a>
-                <a href="#" title="facebook"><img class="facebookLink"
-                                                  src="https://img.icons8.com/windows/32/ffffff/facebook-new.png"/></a>
-                <a href="#" title="linkedin"><img class="linkedinLink"
-                                                  src="https://img.icons8.com/windows/32/ffffff/linkedin.png"/></a>
+                <a href="{{ setting.twitter }}" title="twitter"><img class="twitterLink"
+                                                                     src="https://img.icons8.com/windows/32/ffffff/twitter.png"/></a>
+                <a href="{{ setting.instagram }}" title="instagram"><img class="instaLink"
+                                                                         src="https://img.icons8.com/windows/32/ffffff/instagram-new.png"/></a>
+                <a href="{{ setting.facebook }}" title="facebook"><img class="facebookLink"
+                                                                       src="https://img.icons8.com/windows/32/ffffff/facebook-new.png"/></a>
+                <a href="{{ setting.linkedin }}" title="linkedin"><img class="linkedinLink"
+                                                                       src="https://img.icons8.com/windows/32/ffffff/linkedin.png"/></a>
             </div>
         </div>
         <div class="footer-list rounded-3 p-4">
             <ul class="me-5 mb-0 ps-0">
-                <li><a href="signin.html">ثبت نام در سایت</a></li>
+                <li><a href="{% url "accounts:login" %}">ثبت نام در سایت</a></li>
                 <li><a href="hotels.html">رزرو هتل</a></li>
                 <li><a href="tourDetails.html">رزرو تور</a></li>
             </ul>
@@ -159,18 +175,22 @@
         </div>
     </div>
     <div class="copyright">
-        تمامی حقوق برای <a style="text-decoration: none;" href="https://crossapp.ir">crossapp.ir</a> محفوظ است &copy;
+        {{ setting.copyrights }} <a style="text-decoration: none;" href="https://crossapp.ir">
     </div>
     <div class="foot">
         <img src="{% static 'images/abrB.png' %}" alt="">
     </div>
 </footer>
 
-<script src="{% static  "js/jquery.magnific-popup.min.js" %}"></script>
-<script src="{% static  "js/jquery.meanmenu.js" %}"></script>
+<!--<script src="{% static  "js/jquery.magnific-popup.min.js" %}"></script>-->
+<!--<script src="{% static  "js/jquery.meanmenu.js" %}"></script>-->
 <script src="{% static  "js/jquery.min.js" %}"></script>
 <script src="{% static  "js/owl.carousel.min.js" %}"></script>
 <script src="{% static  "js/bootstrap.js" %}"></script>
+<script src="{% static  "js/persian-date.min.js" %}"></script>
+<script src="{% static  "js/persian-datepicker.min.js" %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{% static  "js/main.js" %}"></script>
+
 </body>
 </html>

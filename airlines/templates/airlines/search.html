@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>خرید بلیط</title>
 {% endblock style %}
 {% block content %}
@@ -33,50 +34,38 @@
                 </div>
 
             </div>
-            <hr>
-            <div class="my-2">
-                نوع بلیط
-                <div class="my-4 d-flex flex-column  justify-content-start">
-                    <div class="form-check rounded-3 me-2 p-1 ps-0">
-                        <label style="color:#7e7d80;" class="form-check-label me-1" for="flexRadioDefault1">
-                            سیستمی
-                        </label>
-                        <input class="form-check-input me-2 ms-1" type="checkbox" id="flexRadioDefault1">
-                    </div>
-                    <div class="form-check rounded-3 me-2 p-1 ps-0">
-                        <label style="color:#7e7d80;" class="form-check-label me-1" for="flexRadioDefault2">
-                            چارتر
-                        </label>
-                        <input class="form-check-input me-2 ms-1" type="checkbox" id="flexRadioDefault2">
-                    </div>
-                </div>
+<!--            <hr>-->
+<!--            <div class="my-2">-->
+<!--                نوع بلیط-->
+<!--                <div class="my-4 d-flex flex-column  justify-content-start">-->
+<!--                    <div class="form-check rounded-3 me-2 p-1 ps-0">-->
+<!--                        <label style="color:#7e7d80;" class="form-check-label me-1" for="flexRadioDefault1">-->
+<!--                            سیستمی-->
+<!--                        </label>-->
+<!--                        <input class="form-check-input me-2 ms-1" type="checkbox" id="flexRadioDefault1">-->
+<!--                    </div>-->
+<!--                    <div class="form-check rounded-3 me-2 p-1 ps-0">-->
+<!--                        <label style="color:#7e7d80;" class="form-check-label me-1" for="flexRadioDefault2">-->
+<!--                            چارتر-->
+<!--                        </label>-->
+<!--                        <input class="form-check-input me-2 ms-1" type="checkbox" id="flexRadioDefault2">-->
+<!--                    </div>-->
+<!--                </div>-->
 
-            </div>
+<!--            </div>-->
             <hr>
             <div class="my-2">
                 شرکت های هواپیمایی
                 <div class="my-4 d-flex flex-column  justify-content-start">
-                    <div class="form-check rounded-3 me-2 p-1 ps-0">
-                        <label style="color:#7e7d80;" class="form-check-label me-1" for="iranair">
-                            <img src="{% static 'icons/IR.png' %}" class="me-1" height="25" width="25" alt="">
-                            ایران ایر
-                        </label>
-                        <input class="form-check-input me-2 ms-1" type="checkbox" id="iranair">
-                    </div>
-                    <div class="form-check rounded-3 me-2 p-1 ps-0">
-                        <label style="color:#7e7d80;" class="form-check-label me-1" for="caspian">
-                            <img src="{% static 'icons/IV.png' %}" class="me-1" height="25" width="25" alt="">
-                            کاسپین
-                        </label>
-                        <input class="form-check-input me-2 ms-1" type="checkbox" id="caspian">
-                    </div>
-                    <div class="form-check rounded-3 me-2 p-1 ps-0">
-                        <label style="color:#7e7d80;" class="form-check-label me-1" for="ata">
-                            <img src="{% static 'icons/I3.png' %}" class="me-1" height="25" width="25" alt="">
-                            آتا
-                        </label>
-                        <input class="form-check-input me-2 ms-1" type="checkbox" id="ata">
-                    </div>
+                    {% for trip  in temp %}
+                        <div class="form-check rounded-3 me-2 p-1 ps-0">
+                            <label style="color:#7e7d80;" class="form-check-label me-1" for="iranair">
+                                <img src="{{ trip.logo.url }}" class="me-1" height="25" width="25" alt="">
+                                {{trip.name}}
+                            </label>
+                            <input class="form-check-input me-2 ms-1 airline_checkbox" type="checkbox" name="airlines[]" value="{{ trip.id }}">
+                        </div>
+                     {% endfor %}
                 </div>
             </div>
         </section>
@@ -156,71 +145,71 @@
                 </div>
             </div>
 
-            <div style="height: 58px; border-radius: 10px; box-shadow: 0 0 10px lightgray;"
-                 class="mb-3 fly-day bg-white d-flex align-items-center justify-content-center">
-                <button class="btn h-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-chevron-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                </button>
-                <div class="d-flex days-div align-items-center justify-content-center" style="height: inherit;">
-                    <a href="" style="color: #9c33d1;">
-                        <span class="px-2" style="border-left: 1px dotted #836691;">
-                            <span>شنبه</span>
-                            <span>01/01</span>
-                        </span>
-                    </a>
-                    <a href="" style="color: #9c33d1;">
-                        <span class="px-2" style="border-left: 1px dotted #836691;">
-                            <span>یکشنبه</span>
-                            <span>01/02</span>
-                        </span>
-                    </a>
-                    <a href="" style="color: #9c33d1;">
-                        <span class="px-2" style="border-left: 1px dotted #836691;">
-                            <span>دوشنبه</span>
-                            <span>01/03</span>
-                        </span>
-                    </a>
-                    <a href="" style="color: #9c33d1;">
-                        <span class="px-2" style="border-left: 1px dotted #836691;">
-                            <span>سه‌شنبه</span>
-                            <span>01/04</span>
-                        </span>
-                    </a>
-                    <a href="" style="color: #9c33d1;">
-                        <span class="px-2" style="border-left: 1px dotted #836691;">
-                            <span>چهارشنبه</span>
-                            <span>01/05</span>
-                        </span>
-                    </a>
-                    <a href="" style="color: #9c33d1;">
-                        <span class="px-2" style="border-left: 1px dotted #836691;">
-                            <span>پنج‌شنبه</span>
-                            <span>01/06</span>
-                        </span>
-                    </a>
-                    <a href="" style="color: #9c33d1;">
-                        <span class="px-2" style="border-left: 1px dotted #836691;">
-                            <span>جمعه</span>
-                            <span>01/07</span>
-                        </span>
-                    </a>
-                </div>
-                <button class="btn h-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-chevron-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                              d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                    </svg>
-                </button>
-            </div>
+<!--            <div style="height: 58px; border-radius: 10px; box-shadow: 0 0 10px lightgray;"-->
+<!--                 class="mb-3 fly-day bg-white d-flex align-items-center justify-content-center">-->
+<!--                <button class="btn h-100">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--                         class="bi bi-chevron-right" viewBox="0 0 16 16">-->
+<!--                        <path fill-rule="evenodd"-->
+<!--                              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>-->
+<!--                    </svg>-->
+<!--                </button>-->
+<!--                <div class="d-flex days-div align-items-center justify-content-center" style="height: inherit;">-->
+<!--                    <a href="" style="color: #9c33d1;">-->
+<!--                        <span class="px-2" style="border-left: 1px dotted #836691;">-->
+<!--                            <span>شنبه</span>-->
+<!--                            <span>01/01</span>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <a href="" style="color: #9c33d1;">-->
+<!--                        <span class="px-2" style="border-left: 1px dotted #836691;">-->
+<!--                            <span>یکشنبه</span>-->
+<!--                            <span>01/02</span>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <a href="" style="color: #9c33d1;">-->
+<!--                        <span class="px-2" style="border-left: 1px dotted #836691;">-->
+<!--                            <span>دوشنبه</span>-->
+<!--                            <span>01/03</span>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <a href="" style="color: #9c33d1;">-->
+<!--                        <span class="px-2" style="border-left: 1px dotted #836691;">-->
+<!--                            <span>سه‌شنبه</span>-->
+<!--                            <span>01/04</span>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <a href="" style="color: #9c33d1;">-->
+<!--                        <span class="px-2" style="border-left: 1px dotted #836691;">-->
+<!--                            <span>چهارشنبه</span>-->
+<!--                            <span>01/05</span>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <a href="" style="color: #9c33d1;">-->
+<!--                        <span class="px-2" style="border-left: 1px dotted #836691;">-->
+<!--                            <span>پنج‌شنبه</span>-->
+<!--                            <span>01/06</span>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                    <a href="" style="color: #9c33d1;">-->
+<!--                        <span class="px-2" style="border-left: 1px dotted #836691;">-->
+<!--                            <span>جمعه</span>-->
+<!--                            <span>01/07</span>-->
+<!--                        </span>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <button class="btn h-100">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--                         class="bi bi-chevron-left" viewBox="0 0 16 16">-->
+<!--                        <path fill-rule="evenodd"-->
+<!--                              d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>-->
+<!--                    </svg>-->
+<!--                </button>-->
+<!--            </div>-->
             {% for trip  in trip_list %}
 
 
-                <section style="border-radius: 10px; box-shadow: 0 0 10px lightgray;"
+                <section data-airline="{{ trip.airline_id }}" data-time="{{ trip.DepartureTime }}" style="border-radius: 10px; box-shadow: 0 0 10px lightgray;"
                          class="my-3 p-2 ticket d-flex bg-white justify-content-center align-items-center">
                     <div class="col-9 d-flex flex-column">
                         <div class="d-flex justify-content-start align-items-center">

@@ -1,6 +1,8 @@
 import datetime
+import json
 import logging
-
+import json
+from django.http import HttpResponse
 import requests
 from azbankgateways import bankfactories
 from azbankgateways import default_settings as settings
@@ -10,7 +12,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-
+from django.conf import settings
+from .models import Passenger, Reservation
 # from django.views.generic import View
 #
 # from .forms import PassengerForm
@@ -53,57 +56,267 @@ def home(request):
 
 class PassengerView(View):
     template_name = "passengers/passengers.html"
-    form_class = ""
 
-    def get(self, request):
-        info = {
+    def setup(self, request, *args, **kwargs):
+        self.info = {
             "airline_name": request.GET.get("airline_name"),
             "DepartureTime": request.GET.get("DepartureTime"),
             "ArrivalTime": request.GET.get("ArrivalTime"),
             "Destination": request.GET.get("Destination"),
             "date": request.GET.get('persian_date'),
-            'origin': request.GET.get('origin_city_name0'),
+            'origin': request.GET.get('origin_city_name'),
             'destination': request.GET.get('destination_city_name')
         }
-        print(request.GET.get('airline_name'))
-        print("*" * 99)
-        print(info.get('airline_name'))
-        print(request.GET.get('persian_date'))
+        self.airline = Airline.objects.get(name=self.info.get('airline_name'))
+        super(PassengerView, self).setup(request, *args, **kwargs)
 
-        return render(request, self.template_name, {"info": info})
+    def get(self, request):
+        return render(request, self.template_name, {"info": self.info})
 
     def post(self, request):
-        print('elyas')
-        print(request.POST)
-        print(request.POST.get('airline_name'))
+        reserve = Reservation.objects.create(
+            user_id=request.user.id,
+            air_line=self.airline,
+            fly_code=self.info.get(''),
+            source=self.info.get('origin'),
+            target=self.info.get('destination'),
+            date='0',
+            email='me@parsa.best',
+            phone_number='0',
+            paid=False
+        )
+        passengers = []
+        for key, value in dict(request.POST).items():
+            for i in range(0, len(value)):
+                if len(passengers) > i:
+                    passenger = passengers[i]
+                else:
+                    passenger = Passenger()
+                    passenger.day = 0
+                    passenger.month = 0
+                    passenger.year = 0
+                    passenger.price = 0
+                    passenger.reserve = reserve
+                if key == 'latinName':
+                    passenger.en_name = value[i]
+                elif key == 'latinFamilyName':
+                    passenger.en_family = value[i]
+                elif key == 'gender':
+                    passenger.gender = value[i]
+                elif key == 'nationalCode':
+                    passenger.national_code = value[i]
+                elif key == 'name':
+                    passenger.ir_name = value[i]
+                elif key == 'familyName':
+                    passenger.ir_family = value[i]
+                if len(passengers) > i:
+                    passengers[i] = passenger
+                else:
+                    passengers.append(passenger)
 
+        Passenger.objects.bulk_create(passengers)
         return render(request, self.template_name)
 
 
 class TripInfoView(View):
     def get(self, request):
-        reserve_obj = Reservation.objects.filter(
-            user=request.user, created=datetime.date.today()
-        )
+        reserve_obj = Reservation.objects.first()
+        print(reserve_obj.fly_code)
         return render(request, "passengers/infoSubmit.html", {"reserve": reserve_obj})
+
+
+class CancelTicketView(View):
+    def get(self, request, reserve_id):
+        reserve_obj = get_object_or_404(Reservation, id=reserve_id)
+        reserve_obj.delete()
+        return redirect('passengers:home')
+
+
+class Reserve(View):
+    def get(self, request):
+        reserve_obj = Reservation.objects.first()
+        # for i in reserve_obj.
+        requests.get(
+            f'{reserve_obj.air_line.base_url}/ReservJS?AirLine={reserve_obj.air_line.symbol}&cbSource={reserve_obj.source}&cbTarget={reserve_obj.target}Q&FlightClass={reserve_obj.flight_class}&FlightNo={reserve_obj.flight_no}&Day&Month&No=1&edtName1={reserve_obj.first_name}&edtLast1={reserve_obj.last_name}&edtAge1={reserve_obj.age}&edtID1={reserve_obj.national_code}&edtContact={reserve_obj.phone_number}&DepartureDate=2022-03-03&OfficeUser={reserve_obj.air_line.username}&OfficePass{reserve_obj.air_line.password}')
 
 
 def go_to_gateway_view(request):
     amount = 1000
     user_mobile_number = "+989112221234"
+    info = {
+        'ResNum': '111111',
+        'amount': amount,
+        'cell': user_mobile_number,
+    }
+    return render(request, 'passengers/payTest.html', {'info': info})
+    # factory = bankfactories.BankFactory()
+    # try:
+    #     bank = factory.auto_create()
+    #     bank.set_request(request)
+    #     bank.set_amount(amount)
+    #     bank.set_client_callback_url(reverse("callback-gateway"))
+    #     bank.set_mobile_number(user_mobile_number)  # اختیاری
+    #
+    #     bank_record = bank.ready()
+    #
+    #     return bank.redirect_gateway()
+    # except AZBankGatewaysException as e:
+    #     logging.critical(e)
+    #     # TODO: redirect to failed page.
+    #     raise e
 
-    factory = bankfactories.BankFactory()
-    try:
-        bank = factory.auto_create()
-        bank.set_request(request)
-        bank.set_amount(amount)
-        bank.set_client_callback_url(reverse("callback-gateway"))
-        bank.set_mobile_number(user_mobile_number)  # اختیاری
 
-        bank_record = bank.ready()
+def cities(request):
+    # re = requests.get('https://api.vhotel.ir/api/V4/cities', auth=('admin', "iEol5iBJjFCRKIBA"))
+    # data = re.text
+    data = {
 
-        return bank.redirect_gateway()
-    except AZBankGatewaysException as e:
-        logging.critical(e)
-        # TODO: redirect to failed page.
-        raise e
+        "ABD": "آبادان",
+
+        "AKW": "آقاجاری",
+
+        "AEU": "ابوموسی",
+
+        "AJK": "اراک",
+
+        "ADU": "اردبیل",
+
+        "OMH": "ارومیه",
+
+        "IFN": "اصفهان",
+
+        "OMI": "امیدیه",
+
+        "AWZ": "اهواز",
+
+        "IHR": "ایران شهر",
+
+        "IIL": "ایلام",
+
+        "BBL": "بابلسر",
+
+        "BJB": "بجنورد",
+
+        "BXR": "بم",
+
+        "BND": "بندر عباس",
+
+        "BDH": "بندر لنگه",
+
+        "MRX": "بندر ماهشهر",
+
+        "IAQ": "بهرگان",
+
+        "BUZ": "بوشهر",
+
+        "XBJ": "بیرجند",
+
+        "BSM": "بیشه کلا",
+
+        "PFQ": "پارس آباد",
+
+        "TBZ": "تبریز",
+
+        "TCX": "تبس",
+
+        "IKA": "تهران",
+
+        "THR": "تهران",
+
+        "TEW": "توحید",
+
+        "KHK": "جزیره خارک",
+
+        "SXI": "جزیره سیری",
+
+        "KIH": "جزیره کیش",
+
+        "JYR": "جیرفت",
+
+        "ZBR": "چابهار",
+
+        "KHA": "خانه",
+
+        "KHD": "خرم آباد",
+
+        "KHY": "خوی",
+
+        "DEF": "دزفول",
+
+        "RZR": "رامسر",
+
+        "RAS": "رشت",
+
+        "RJN": "رفسنجان",
+
+        "ACZ": "زابل",
+
+        "ZAH": "زاهدان",
+
+        "JWN": "زنجان",
+
+        "SRY": "ساری",
+
+        "AFZ": "سبزوار",
+
+        "CKT": "سرخس",
+
+        "SDG": "سنندج",
+
+        "ACP": "سهند",
+
+        "SYJ": "سیرجان",
+
+        "CQD": "شهر کرد",
+
+        "SYZ": "شیراز",
+
+        "PGU": "عسلویه",
+
+        "FAZ": "فاسا",
+
+        "GZW": "قزوین",
+
+        "GSM": "قشم",
+
+        "GCH": "گچساران",
+
+        "GBT": "گورگن",
+
+        "LRR": "لار",
+
+        "LFM": "لامرد",
+
+        "LVP": "لاوان",
+
+        "MHD": "مشهد",
+
+        "NUJ": "نوژه",
+
+        "NSH": "نوشهر",
+
+        "IFH": "هسا",
+
+        "HDM": "همدان",
+
+        "HDR": "هوادریا",
+
+        "KNR": "کانگان",
+
+        "KER": "کرمان",
+
+        "KSH": "کرمانشاه",
+
+        "KLM": "کلاله",
+
+        "YES": "یاسوج",
+
+        "AZD": "یزد"
+
+    }
+
+    # serialize data obj as a JSON stream
+    data = json.dumps(data)
+    response = HttpResponse(data, content_type='application/json charset=utf-8')
+
+    return response

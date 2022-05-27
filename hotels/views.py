@@ -13,7 +13,9 @@ class HotelView(View):
         response = requests.get('https://api.vhotel.ir/api/V4/hotels', auth=('admin', "iEol5iBJjFCRKIBA"))
         hotel_list = json.loads(response.content)
         print(hotel_list)
-        return render(request, 'hotels/list.html', {'hotels_list': hotel_list})
+        print('asdk')
+        count = range(0, 2)
+        return render(request, 'hotels/list.html', {'hotels_list': hotel_list, 'count': count})
 
 
 # parsa
@@ -38,7 +40,7 @@ class HotelRoomsView(View):
         f = requests.Session()
         headers = {'content-type': 'application/json'}
         my_data = {
-            "availabilityRq": {'hotelsId': [1456]},
+            "availabilityRq": {'hotelsId': [request.GET.get('')]},
             'form': '2022-5-26',
             'to': '2022-5-30',
         }

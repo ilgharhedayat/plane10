@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/infosubmit.css' %}">
     <link rel="stylesheet" href="{% static 'css/common.css' %}">
@@ -95,7 +96,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for passenger in reserve %}
+                    {% for passenger in reserve.passengers.all %}
                         <tr class="details-body">
                             <td>{{ passenger.age }}</td>
                             <td class="d-flex flex-column align-items-center justify-content-center">
@@ -162,8 +163,10 @@
                 <small class="ms-1">ریال</small>
             </div>
             <div class="btn-accept-cancel">
-                <a href="fly.html" class="btn ms-2 px-5 fw-bold btn-outline-dark">انصراف</a>
-                <a href="" data-bs-toggle="modal" data-bs-target="#paymentModal" class="btn ms-2 px-5 fw-bold btn-primary">پرداخت</a>
+                <a href="{% url "passengers:cancel_reserve" reserve.id %}"
+                   class="btn ms-2 px-5 fw-bold btn-outline-dark">انصراف</a>
+                <a href="{% url "passengers:pay" %}"
+                   class="btn ms-2 px-5 fw-bold btn-primary">پرداخت</a>
             </div>
         </section>
 

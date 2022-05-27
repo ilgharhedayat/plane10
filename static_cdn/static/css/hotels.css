@@ -14,12 +14,13 @@ main{
 }
 .outhotels, .inhotels{
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
   flex-wrap: wrap;
 }
 .outhotel-card, .inhotel-card{
   width: 22%;
+  margin: 1em;
   background-color: #E9E9E9;
   border-radius: 3px;
   border-bottom: 5px solid rgba(103,34,71,1);
