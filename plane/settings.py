@@ -375,4 +375,4 @@ AZ_IRANIAN_BANK_GATEWAYS = {
     ],  # اختیاری
 }
 
-LANGUAGE_CODE = "fa-ir"
+
