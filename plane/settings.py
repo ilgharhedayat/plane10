@@ -17,7 +17,6 @@
 # # Application definition
 #
 # INSTALLED_APPS = [
-#     'jazzmin',
 #     "django.contrib.admin",
 #     "django.contrib.auth",
 #     "django.contrib.contenttypes",
@@ -212,7 +211,8 @@ ALLOWED_HOSTS = ['booking.darkube.app' , 'www.booking.darkube.app']
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    'adminlte3',
+    'adminlte3_theme',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
