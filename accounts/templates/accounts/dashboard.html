@@ -116,16 +116,18 @@
                                     <h4 class="fw-bold">{{ trip.AdultTotalPrices }}</h4>
                                     <small class="ms-2 mt-1">ریال</small>
                                 </div>
-                                <form method="post" action="{% url " passengers:passenger" %}" style="display: none">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="AdultTotalPrices" value="{{ trip.AdultTotalPrices }}">
-                                    <input type="hidden" name="ArrivalTime" value="{{ trip.ArrivalTime }}">
-                                    <input type="hidden" name="Destination" value="{{ trip.Destination }}">
-                                    <input type="hidden" name="DepartureTime" value="{{ trip.DepartureTime }}">
-                                    <input type="hidden" name="Origin" value="{{ trip.Origin }}">
-                                    <input type="hidden" name="Origin" value="{{ trip.Origin }}">
-                                    <input type="hidden" name="airline_name" value="{{ trip.airline_name }}">
-                                    <button type="submit" id="formSubmit_{{ forloop.counter }}"></button>
+                                <form method="post" action="{% url " passengers:passenger
+                            " %}
+                                " style="display: none">
+                                {% csrf_token %}
+                                <input type="hidden" name="AdultTotalPrices" value="{{ trip.AdultTotalPrices }}">
+                                <input type="hidden" name="ArrivalTime" value="{{ trip.ArrivalTime }}">
+                                <input type="hidden" name="Destination" value="{{ trip.Destination }}">
+                                <input type="hidden" name="DepartureTime" value="{{ trip.DepartureTime }}">
+                                <input type="hidden" name="Origin" value="{{ trip.Origin }}">
+                                <input type="hidden" name="Origin" value="{{ trip.Origin }}">
+                                <input type="hidden" name="airline_name" value="{{ trip.airline_name }}">
+                                <button type="submit" id="formSubmit_{{ forloop.counter }}"></button>
                                 </form>
                                 <button type="button" onclick="parsaSubmit({{ forloop.counter }})"
                                         style="border-radius: 7px;"
@@ -134,8 +136,8 @@
                                 </button>
                                 <small class="mt-2 text-danger">{{ trip.ClassesStatus }}</small>
                             </div>
-                        {% empty %}
-                            <h1 class="text-center">شما هیج رزروی تا به حال نداشتید</h1>
+                            <!--                        {% empty %}-->
+                            <!--                        <h1 class="text-center">شما هیج رزروی تا به حال نداشتید</h1>-->
                         {% endfor %}
                         </section>
                     </div>
@@ -207,8 +209,8 @@
                                 </button>
                                 <small class="mt-2 text-danger">{{ trip.ClassesStatus }}</small>
                             </div>
-                        {% empty %}
-                            <h1 class="text-center">شما هیج رزروی تا به حال نداشتید</h1>
+                            <!--                        {% empty %}-->
+                            <!--                        <h1 class="text-center">شما هیج رزروی تا به حال نداشتید</h1>-->
                         {% endfor %}
                         </section>
                     </div>

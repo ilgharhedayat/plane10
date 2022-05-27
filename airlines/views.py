@@ -18,7 +18,8 @@ class SearchListView(View):
         # available_trips = ''
         airlines_list = Airline.objects.all()
         temp = Airline.objects.all()
-        fly_date = request.GET.get('date')
+        fly_date =request.GET.get('date')
+        print(request.GET.get('date'))
         print(type(fly_date))
         # date = jdatetime.date(day=(fly_date[6:]), month=(fly_date[4:6]), year=(fly_date[:3]))
         for airline in airlines_list:

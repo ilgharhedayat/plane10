@@ -140,9 +140,9 @@ $(function () {
         if (id) {
             $(`#${id}`).persianDatepicker({
                 altField: `#${id}`,
-                altFormat: "YYYY/MM/DD",
+                altFormat: "MM/DD",
                 observer: false,
-                format: 'YYYY/MM/DD',
+                format: 'MM/DD',
                 initialValue: false,
                 initialValueType: 'persian',
                 autoClose: true,
@@ -153,9 +153,9 @@ $(function () {
 const setDate = () => {
     $(".birthdate").persianDatepicker({
         altField: '.birthdate',
-        altFormat: "YYYY/",
+        altFormat: "MM/DD",
         observer: false,
-        format: 'YYYY/MM/DD',
+        format: 'MM/DD',
         initialValue: false,
         initialValueType: 'persian',
         autoClose: true,
@@ -245,11 +245,12 @@ if (document.getElementById('travelSrc')) {
 }
 $('.select2').select2({
     placeholder: 'لطفا یک مورد را انتخاب کنید',
-    width: '40%',
+    width: "100%",
 });
 $("#destination").select2({
     placeholder: 'لطفا یک مورد را انتخاب کنید',
-    width: '90%',
+    width: "100%",
+
 })
 $("#fly-area-submit").click(function (e) {
     e.preventDefault();
